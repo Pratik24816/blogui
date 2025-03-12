@@ -77,8 +77,16 @@ const Login = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await axios.post('http://localhost:8080/api/users/login', { email, password });
-            if (response.data) {
+            const response = await axios.post('http://localhost:8080/api/login',
+                null,
+                {
+                    params: {
+                        email: email,
+                        password: password
+                    }
+                });
+            console.log(email,password);
+            if (response.status===200) {
                 localStorage.setItem('user', JSON.stringify(response.data));
                 navigate('/home');
             }
