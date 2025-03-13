@@ -105,7 +105,12 @@ const Signup = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await axios.post('http://localhost:8080/api/users/signup', {
+            const isEmailAvailable = await checkEmailAvailability(email);
+            if (!isEmailAvailable) {
+                setError('Email already exists. Please use a different email.');
+                return;
+            }
+            const response = await axios.post('http://localhost:8080/api/users/', {
                 name,
                 email,
                 password,
@@ -120,6 +125,19 @@ const Signup = () => {
         }
     };
 
+    const checkEmailAvailability = async (email) => {
+        try {
+            await axios.get(`http://localhost:8080/api/users/email/${email}`);
+            return false;
+        } catch (error) {
+            if (error.response) {
+                return true;
+            }
+            console.error('Error checking email:', error);
+            return false;
+        }
+    };
+    
     return (
         <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-green-400 to-teal-600">
             <div className="bg-white p-8 rounded-xl shadow-lg w-full max-w-md">

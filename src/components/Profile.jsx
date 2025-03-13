@@ -1,14 +1,15 @@
 import React, { useEffect,useState } from 'react';
 import Navbar from './Navbar';
 import axios from 'axios';
+import BlogCard from './BlogCard';
 import { motion } from 'framer-motion';
+import { useNavigate,Link } from 'react-router-dom';
+import { FiEdit } from 'react-icons/fi';
 
 const Profile = () => {
     // ✅ Get user data from localStorage
-    const [showPopup, setShowPopup] = useState(false);
-    const [name, setName] = useState('');
-    const [about, setAbout] = useState('');
-
+    const [blogs, setBlogs] = useState([]);
+    
     const user = JSON.parse(localStorage.getItem('user')) || {};
     const email = user.email;
     const [use, setUse] = useState({
@@ -21,31 +22,27 @@ const Profile = () => {
     useEffect(()=>{
         const fetchUser = async () => {
             const response = await axios.get(`http://localhost:8080/api/users/email/${email}`); 
-            setUse(response.data); 
+            console.log(response.data); 
+            setUse((prevState) => ({
+                ...prevState, 
+                ...response.data 
+            }));
         };
         fetchUser();
     },[])
 
-    const handleUpdate = async () => {
-        try {
-            
-            const response = await axios.put(`http://localhost:8080/api/users/${use.id}`,use, {
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-            });
-
-            if (response.ok) {
-                alert('Profile updated successfully!');
-                setShowPopup(false);
-            } else {
-                console.error('Failed to update profile');
-                alert('Failed to update profile');
+    useEffect(() => {
+        const fetchBlogs = async () => {
+            try {
+                const userInfo = await axios.get(`http://localhost:8080/api/users/email/${user.email}`);
+                const response = await axios.get(`http://localhost:8080/api/user/${userInfo.data.id}/blogs`);
+                setBlogs(response.data);
+            } catch (error) {
+                console.error('Error fetching blogs:', error);
             }
-        } catch (error) {
-            console.error('Error:', error);
-        }
-    };
+        };
+        fetchBlogs();
+    }, []);
 
     // ✅ Fallback for avatar generation (if username is not available)
     const avatarSeed = user.username || 'default-user';
@@ -78,55 +75,20 @@ const Profile = () => {
                         <p className="text-white text-md">{use.name || 'N/A'}</p>
                         
                         {/* Edit Profile Button */}
-                        <motion.a
-                            href="#"
-                            whileHover={{ scale: 1.05 }}
-                            whileTap={{ scale: 0.95 }}
-                            className="mt-6 bg-white text-pink-500 px-6 py-2 rounded-full font-semibold hover:bg-gray-200 transition duration-300 shadow"
-                            onClick={() => setShowPopup(true)}
+                        <Link
+                            to="/updateprofile"
+                            state={{ user: use }}
+                            className="mt-6 flex items-center gap-2 px-6 py-2 rounded-full
+                                    bg-gradient-to-r from-pink-500 to-orange-400
+                                    text-white font-semibold shadow-md
+                                    hover:from-orange-500 hover:to-pink-500
+                                    transition duration-300"
                         >
+                            <FiEdit className="text-lg" />
                             Edit Profile
-                        </motion.a>
+                        </Link>
 
-                        {/* Popup for update */}
-                        {showPopup && (
-                            <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
-                                <div className="bg-white p-6 rounded-lg shadow-lg w-80">
-                                    <h3 className="text-xl font-bold mb-4">Update Profile</h3>
-
-                                    <input
-                                        type="text"
-                                        placeholder="Enter Name"
-                                        value={name}
-                                        onChange={(e) => setName(e.target.value)}
-                                        className="w-full p-2 border rounded-md mb-3"
-                                    />
-
-                                    <textarea
-                                        placeholder="Enter About"
-                                        value={about}
-                                        onChange={(e) => setAbout(e.target.value)}
-                                        className="w-full p-2 border rounded-md mb-3"
-                                    />
-
-                                    <div className="flex justify-end gap-3">
-                                        <button
-                                            onClick={() => setShowPopup(false)}
-                                            className="bg-gray-400 text-white px-4 py-2 rounded-md"
-                                        >
-                                            Cancel
-                                        </button>
-
-                                        <button
-                                            onClick={handleUpdate}
-                                            className="bg-pink-500 text-white px-4 py-2 rounded-md hover:bg-pink-600"
-                                        >
-                                            Confirm Update
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                        )}
+                    
                     </div>
 
                     {/* ✅ Right Section */}
@@ -175,6 +137,25 @@ const Profile = () => {
                     </div>
                 </motion.div>
             </div>
+            {/* My Blogs Section */}
+            <div className="mt-12 px-6">
+    <h3 className="text-3xl font-bold text-gray-800 mb-8 border-b-4 border-pink-500 pb-3">
+        My Blogs
+    </h3>
+
+    {blogs.length > 0 ? (
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
+            {blogs.map((blog) => (
+                <BlogCard key={blog.id} blog={blog} />
+            ))}
+        </div>
+    ) : (
+        <p className="text-gray-500 italic text-center mt-8">
+            You haven't created any blogs yet. Start writing now! ✍️
+        </p>
+    )}
+</div>
+
         </div>
     );
 };
