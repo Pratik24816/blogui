@@ -49,39 +49,56 @@ const ProfileUpdate = () => {
     };
 
     return (
-        <div className="flex justify-center items-center min-h-screen bg-gray-100">
-            <div className="bg-white p-6 rounded-lg shadow-lg w-96">
-                <h2 className="text-2xl font-bold mb-4">Update Profile</h2>
-
-                <input
-                    type="text"
-                    name="name"
-                    value={formData.name}
-                    onChange={handleChange}
-                    placeholder="Name"
-                    className="w-full p-2 border rounded-md mb-3"
-                />
-
-                <input
-                    type="text"
-                    name="about"
-                    value={formData.about}
-                    onChange={handleChange}
-                    placeholder="About"
-                    className="w-full p-2 border rounded-md mb-3"
-                />
-
-                <div className="flex justify-end gap-3">
+        <div className="flex justify-center items-center min-h-screen bg-gradient-to-br from-gray-900 to-gray-800">
+            <div className="bg-gradient-to-br from-[#1e293b] to-[#334155] p-8 rounded-xl shadow-2xl 
+                            w-full max-w-md border border-teal-500">
+                <h2 className="text-3xl font-extrabold text-teal-400 mb-6 text-center">
+                    Update Profile
+                </h2>
+    
+                <div className="space-y-4">
+                    <div>
+                        <label className="block text-sm text-teal-300 mb-1">Name</label>
+                        <input
+                            type="text"
+                            name="name"
+                            value={formData.name}
+                            onChange={handleChange}
+                            placeholder="Enter your name"
+                            className="w-full p-3 border border-teal-500 bg-gray-700 text-white 
+                                       rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-400 
+                                       placeholder-white/60"
+                        />
+                    </div>
+    
+                    <div>
+                        <label className="block text-sm text-teal-300 mb-1">About</label>
+                        <input
+                            type="text"
+                            name="about"
+                            value={formData.about}
+                            onChange={handleChange}
+                            placeholder="Tell us about yourself"
+                            className="w-full p-3 border border-teal-500 bg-gray-700 text-white 
+                                       rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-400 
+                                       placeholder-white/60"
+                        />
+                    </div>
+                </div>
+    
+                <div className="flex justify-end gap-3 mt-6">
                     <button
                         onClick={() => navigate('/profile')}
-                        className="bg-gray-400 text-white px-4 py-2 rounded-md"
+                        className="bg-gray-600 text-white px-5 py-2.5 rounded-lg 
+                                   hover:bg-gray-500 transition duration-300"
                     >
                         Cancel
                     </button>
-
+    
                     <button
                         onClick={handleUpdate}
-                        className="bg-pink-500 text-white px-4 py-2 rounded-md hover:bg-pink-600"
+                        className="bg-teal-500 text-white px-5 py-2.5 rounded-lg 
+                                   hover:bg-teal-400 transition duration-300 shadow-md"
                     >
                         Confirm Update
                     </button>
@@ -89,6 +106,9 @@ const ProfileUpdate = () => {
             </div>
         </div>
     );
+    
+    
+    
 };
 
 export default ProfileUpdate;

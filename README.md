@@ -1,12 +1,82 @@
-# React + Vite
+# 🌐 **BlogNest**  
+> _Your ultimate platform for sharing ideas, thoughts, and stories._
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+---
 
-Currently, two official plugins are available:
+## 🚀 Introduction  
+**BlogNest** is a feature-rich blogging platform designed to offer an intuitive and engaging experience for both content creators and readers. With powerful blog management tools and a sleek UI, BlogNest simplifies content creation while ensuring seamless interaction.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+---
 
-## Expanding the ESLint configuration
+## ✨ Features  
+✅ **User Authentication** – Secure and efficient login/registration.  
+✅ **Blog Management** – Create, edit, and delete your blogs.  
+✅ **Categories Support** – Organize content with relevant categories.  
+✅ **Comments System** – Engage with readers through comments.  
+✅ **Rich Text Editor** – Write blogs with advanced formatting.  
+✅ **Responsive UI** – Optimized for all devices with a clean design.  
 
-If you are developing a production application, we recommend using TypeScript and enable type-aware lint rules. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+---
+
+## 🛠️ Tech Stack  
+### Frontend  
+🟦 **React** (with Vite)  
+🎨 **Tailwind CSS** for styling  
+🧭 **React Router** for navigation  
+🔗 **Axios** for API requests  
+
+### Backend  
+☕ **Spring Boot** for backend logic  
+🐘 **MySQL** as the database  
+📄 **JPA (Java Persistence API)** for data handling  
+
+---
+
+## 📦 Installation Guide  
+
+### Backend Setup  
+1. **Clone the backend repository:**  
+   ```bash
+   git clone https://github.com/anmolpurohit777/BlogNest.git
+   cd BlogNest
+   ```
+
+2. **Configure MySQL Database:**  
+   Update the `application.properties` file with your database details:  
+   ```properties
+   spring.datasource.url=jdbc:mysql://localhost:3306/your_database
+   spring.datasource.username=your_username
+   spring.datasource.password=your_password
+   ```
+
+3. **Run the Application:**  
+   ```bash
+   ./mvnw spring-boot:run
+   ```
+
+---
+
+### Frontend Setup  
+1. **Clone the frontend repository:**  
+   ```bash
+   git clone https://github.com/Pratik24816/blogui.git
+   cd blogui
+   ```
+
+2. **Install Dependencies:**  
+   ```bash
+   npm install
+   ```
+
+3. **Start the Development Server:**  
+   ```bash
+   npm run dev
+   ```
+
+---
+
+## 📋 Usage  
+1. 🔐 **Register/Login** – Create an account or log in securely.  
+2. 📝 **Create a Blog** – Draft your content using the rich text editor.  
+3. 📚 **Browse Content** – Explore engaging blogs categorized neatly.  
+4. 💬 **Add Comments** – Share your thoughts with fellow readers.  
